@@ -89,6 +89,7 @@ if [[ -n "$GIT_TAG" ]]; then
 else
     VERSION="$VERSION_K8S+k3s-${COMMIT:0:8}$DIRTY"
 fi
+VERSION="v1.28.6+k3s2"
 VERSION_TAG="$(sed -e 's/+/-/g' <<< "$VERSION")"
 
 BINARY_POSTFIX=

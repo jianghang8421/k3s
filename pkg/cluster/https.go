@@ -12,6 +12,7 @@ import (
 	"net/http/pprof"
 	"os"
 	"path/filepath"
+	"time"
 
 	"github.com/gorilla/mux"
 	"github.com/k3s-io/k3s/pkg/daemons/config"
@@ -127,8 +128,11 @@ func (c *Cluster) initClusterAndHTTPS(ctx context.Context) error {
 
 	// Create a HTTP server with the registered request handlers, using logrus for logging
 	server := http.Server{
-		Handler: handler,
+		Handler:     handler,
+		IdleTimeout: 90 * time.Second,
 	}
+
+	logrus.Infof("jianghang server.IdleTimeout: %v", server.IdleTimeout)
 
 	if logrus.IsLevelEnabled(logrus.DebugLevel) {
 		server.ErrorLog = log.New(logrus.StandardLogger().Writer(), "Cluster-Http-Server ", log.LstdFlags)
